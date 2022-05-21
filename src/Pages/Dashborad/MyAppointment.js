@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useQuery } from "react-query";
 import { signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 import Loading from "../Shared/Loading";
 
@@ -12,18 +12,21 @@ const MyAppointment = () => {
   const { email } = user;
   const navigate = useNavigate();
   /* const { isLoading, error, data } = useQuery("booking", () =>
-    fetch(`http://localhost:5000/booking?patient=${email}`).then((res) =>
+    fetch(`https://stormy-anchorage-91662.herokuapp.com/booking?patient=${email}`).then((res) =>
       res.json()
     )
   ); */
   useEffect(() => {
     if (user) {
-      fetch(`http://localhost:5000/booking?patient=${email}`, {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
+      fetch(
+        `https://stormy-anchorage-91662.herokuapp.com/booking?patient=${email}`,
+        {
+          method: "GET",
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
         .then((res) => {
           if (res.status === 401 || res.status === 403) {
             signOut(auth);
@@ -50,6 +53,7 @@ const MyAppointment = () => {
               <th>Date</th>
               <th>Time</th>
               <th>Treatment</th>
+              <th>payment</th>
             </tr>
           </thead>
           <tbody>
@@ -60,6 +64,20 @@ const MyAppointment = () => {
                 <td>{a.date}</td>
                 <td>{a.slot}</td>
                 <td>{a.treatment}</td>
+                <td>
+                  {a.price && !a.paid && (
+                    <Link to={`/dashboard/payment/${a._id}`}>
+                      <button className="btn btn-xs btn-success">Pay</button>
+                    </Link>
+                  )}
+                  {a.price && a.paid && (
+                    <div>
+                      {" "}
+                      <p className="text-success">Paid</p>
+                      <p>Transaction Id : {a.transactionId}</p>
+                    </div>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

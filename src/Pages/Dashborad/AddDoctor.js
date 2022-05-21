@@ -11,7 +11,9 @@ const AddDoctor = () => {
     reset,
   } = useForm();
   const { isLoading, data: services } = useQuery("services", () =>
-    fetch("http://localhost:5000/service").then((res) => res.json())
+    fetch("https://stormy-anchorage-91662.herokuapp.com/service").then((res) =>
+      res.json()
+    )
   );
   if (isLoading) {
     return <Loading />;
@@ -46,7 +48,7 @@ const AddDoctor = () => {
             speciality: data.speciality,
             img: img,
           };
-          fetch("http://localhost:5000/doctor", {
+          fetch("https://stormy-anchorage-91662.herokuapp.com/doctor", {
             method: "POST",
             headers: {
               "content-type": "application/json",

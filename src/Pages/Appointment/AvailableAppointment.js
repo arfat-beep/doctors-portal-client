@@ -17,15 +17,15 @@ const AvailableAppointment = ({ selected }) => {
     data: services,
     refetch,
   } = useQuery("available", () =>
-    fetch(`http://localhost:5000/available?date=${formattedDate}`).then((res) =>
-      res.json()
-    )
+    fetch(
+      `https://stormy-anchorage-91662.herokuapp.com/available?date=${formattedDate}`
+    ).then((res) => res.json())
   );
   if (isLoading) {
     return <Loading />;
   }
   /*  useEffect(() => {
-    fetch(`http://localhost:5000/available?date=${formattedDate}`)
+    fetch(`https://stormy-anchorage-91662.herokuapp.com/available?date=${formattedDate}`)
       .then((res) => res.json())
       .then((data) => setServices(data));
   }, [formattedDate]); */

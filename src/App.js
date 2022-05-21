@@ -9,6 +9,7 @@ import ManageDoctors from "./Pages/Dashborad/ManageDoctors";
 import MyAppointment from "./Pages/Dashborad/MyAppointment";
 import MyHIstory from "./Pages/Dashborad/MyHIstory";
 import MyReview from "./Pages/Dashborad/MyReview";
+import Payment from "./Pages/Dashborad/Payment";
 import Users from "./Pages/Dashborad/Users";
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
@@ -38,6 +39,7 @@ function App() {
           <Route index element={<MyAppointment></MyAppointment>}></Route>
           <Route path="review" element={<MyReview />}></Route>
           <Route path="history" element={<MyHIstory />}></Route>
+          <Route path="payment/:id" element={<Payment />} />
           <Route
             path="users"
             element={
